@@ -1098,6 +1098,127 @@ textarea.inp { resize: vertical; min-height: 80px; margin-bottom: 8px; }
   background: var(--a) !important;
   border-color: var(--a) !important;
 }
+
+/* ── Confirm Dialog ── */
+.confirm-overlay {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.confirm-overlay.open { display: flex; animation: fadeIn .2s ease; }
+.confirm-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 28px 24px 20px;
+  max-width: 320px; width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  animation: confirmPop .25s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes confirmPop {
+  from { opacity:0; transform:scale(0.88) translateY(12px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+.confirm-icon {
+  width: 52px; height: 52px;
+  background: var(--r-dim);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+.confirm-icon svg { color: var(--r); }
+.confirm-title { font-size: 17px; font-weight: 700; text-align: center; color: var(--t1); margin-bottom: 8px; }
+.confirm-body  { font-size: 13px; color: var(--t2); text-align: center; line-height: 1.6; margin-bottom: 22px; }
+.confirm-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.confirm-cancel {
+  padding: 13px; border-radius: 12px;
+  border: 1.5px solid var(--border2);
+  background: var(--surface2);
+  color: var(--t1); font-family: var(--font-body);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background .15s;
+}
+.confirm-cancel:active { background: var(--surface3); }
+.confirm-delete {
+  padding: 13px; border-radius: 12px; border: none;
+  background: var(--r); color: #fff;
+  font-family: var(--font-body); font-size: 14px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255,85,85,0.35);
+  transition: all .15s;
+}
+.confirm-delete:active { background: #e03030; transform: scale(0.98); }
+
+/* ── Missing ingredient highlight ── */
+.ing-list-item.missing .ing-name { color: var(--r); }
+.ing-list-item.missing .check-circle { border-color: var(--r-dim); }
+.sub-panel {
+  margin-top: 10px;
+  background: rgba(255,85,85,0.07);
+  border: 1px solid rgba(255,85,85,0.18);
+  border-radius: var(--rad2);
+  padding: 10px 14px;
+}
+.sub-panel-title {
+  font-size: 11px; font-weight: 700;
+  color: var(--r); text-transform: uppercase;
+  letter-spacing: 0.6px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.sub-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,85,85,0.1);
+  font-size: 13px; line-height: 1.5;
+}
+.sub-item:last-child { border-bottom: none; padding-bottom: 0; }
+.sub-ing-name { color: var(--r); font-weight: 600; }
+.sub-alts { color: var(--t2); }
+.sub-ratio { color: var(--t3); font-size: 11px; margin-top: 2px; }
+
+/* ── Interactive Tutorial ── */
+#tutorial-overlay { position: fixed; inset: 0; z-index: 800; pointer-events: none; display: none; }
+#tutorial-overlay.active { display: block; }
+.tut-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.72); pointer-events: all; }
+.tut-spotlight {
+  position: absolute;
+  border-radius: 16px;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.72);
+  border: 2.5px solid var(--a);
+  box-sizing: border-box;
+  transition: all 0.38s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none; z-index: 2;
+}
+.tut-tooltip {
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 16px 18px;
+  max-width: 280px; min-width: 220px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  z-index: 3; pointer-events: all;
+  transition: all 0.32s cubic-bezier(0.4,0,0.2,1);
+}
+.tut-tooltip::before {
+  content: ''; position: absolute;
+  width: 12px; height: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  transform: rotate(45deg);
+}
+.tut-tooltip.arrow-top::before    { top:-7px; left:24px; border-right:none; border-bottom:none; }
+.tut-tooltip.arrow-bottom::before { bottom:-7px; left:24px; border-left:none; border-top:none; }
+.tut-step-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; color: var(--a); text-transform: uppercase; margin-bottom: 6px; }
+.tut-title { font-size: 15px; font-weight: 700; color: var(--t1); margin-bottom: 6px; }
+.tut-body  { font-size: 13px; color: var(--t2); line-height: 1.65; margin-bottom: 14px; }
+.tut-actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.tut-skip  { font-size: 12px; color: var(--t3); background: none; border: none; cursor: pointer; padding: 4px; font-family: var(--font-body); }
+.tut-next  { flex:1; padding: 10px 16px; border-radius: 10px; border: none; background: linear-gradient(135deg,var(--a),#ff5500); color: #fff; font-family: var(--font-body); font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 3px 10px var(--a-glo); }
+.tut-dots  { display: flex; gap: 5px; align-items: center; }
+.tut-dot   { width: 6px; height: 6px; border-radius: 50%; background: var(--surface3); transition: all .2s; }
+.tut-dot.active { background: var(--a); width: 14px; border-radius: 3px; }
 </style>
 </head>
 <body>
@@ -1463,6 +1584,16 @@ textarea.inp { resize: vertical; min-height: 80px; margin-bottom: 8px; }
         </div>
         <span class="set-val">Latest</span>
       </div>
+      <div class="set-row" data-action="restart-tutorial" style="cursor:pointer;">
+        <div class="set-icon" style="background:var(--a-dim);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--a)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/><path d="M9 3.5A9 9 0 0 1 21 12"/><polyline points="21 3 21 9 15 9"/></svg>
+        </div>
+        <div class="set-label">
+          <div class="set-title">App Tour</div>
+          <div class="set-desc">Restart the interactive tutorial</div>
+        </div>
+        <svg class="set-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
       <div class="set-row">
         <div class="set-icon" style="background:var(--g-dim);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g)" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
@@ -1566,6 +1697,7 @@ textarea.inp { resize: vertical; min-height: 80px; margin-bottom: 8px; }
       <!-- Ingredients tab -->
       <div id="mt-ing">
         <div id="m-ing-list"></div>
+        <div id="m-sub-panel" class="sub-panel" style="display:none;margin-top:10px;"></div>
         <button class="btn-primary mt" data-action="start-cooking">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           Start Cooking
@@ -1795,6 +1927,37 @@ textarea.inp { resize: vertical; min-height: 80px; margin-bottom: 8px; }
   </div>
 </div>
 
+
+<!-- CONFIRM DELETE MODAL -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+    </div>
+    <div class="confirm-title">Delete All Data?</div>
+    <div class="confirm-body">This will permanently erase your saved recipes, meal plans, grocery list, API key and all settings.<br><br><strong style="color:var(--r);">This cannot be undone.</strong></div>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" data-action="confirm-cancel">Cancel</button>
+      <button class="confirm-delete" data-action="confirm-delete">Delete All</button>
+    </div>
+  </div>
+</div>
+
+<!-- TUTORIAL OVERLAY -->
+<div id="tutorial-overlay">
+  <div class="tut-spotlight" id="tut-spotlight"></div>
+  <div class="tut-tooltip" id="tut-tooltip">
+    <div class="tut-step-label" id="tut-step-label"></div>
+    <div class="tut-title" id="tut-title"></div>
+    <div class="tut-body" id="tut-body"></div>
+    <div class="tut-actions">
+      <button class="tut-skip" data-action="tut-skip">Skip tour</button>
+      <div class="tut-dots" id="tut-dots"></div>
+      <button class="tut-next" data-action="tut-next" id="tut-next-btn">Next</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast">
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
   <span id="toast-msg"></span>
@@ -1885,6 +2048,58 @@ const CATS = {
 // ════════════════════════════════════════════════════════
 // MEALS DATABASE — 100 halal meals
 // ════════════════════════════════════════════════════════
+
+// ======================== SUBSTITUTIONS ========================
+const SUBS = {
+  'Eggs':{'alts':['Flax egg (1 tbsp flaxseed + 3 tbsp water)','Mashed banana (1/4 cup per egg)','Yoghurt (3 tbsp)'],'ratio':'1:1 unless noted'},
+  'Butter':{'alts':['Olive Oil (3/4 the amount)','Coconut Oil (1:1)','Vegetable Oil (1:1)'],'ratio':'Adjust for flavour'},
+  'Milk':{'alts':['Coconut Milk (1:1)','Oat Milk (1:1)','Water + 1 tbsp butter per cup'],'ratio':'1:1'},
+  'Cream':{'alts':['Coconut Cream (1:1)','Full-fat Yoghurt (1:1)','Evaporated Milk (1:1)'],'ratio':'1:1'},
+  'Heavy Cream':{'alts':['Coconut Cream (1:1)','Greek Yoghurt thinned with milk'],'ratio':'1:1'},
+  'Cheese':{'alts':['Feta (stronger, use less)','Mozzarella','Nutritional Yeast'],'ratio':'Adjust to taste'},
+  'Mozzarella':{'alts':['Cheddar (melts well)','Halloumi (firmer)'],'ratio':'Same amount'},
+  'Feta':{'alts':['Crumbled Tofu + salt','Ricotta (milder)','Goats cheese'],'ratio':'Same amount'},
+  'Yoghurt':{'alts':['Sour Cream (1:1)','Coconut Yoghurt (1:1)','Blended Cottage Cheese'],'ratio':'1:1'},
+  'Chicken':{'alts':['Turkey (same time)','Firm Tofu (reduce time)','Chickpeas (for stews)'],'ratio':'Same weight'},
+  'Ground Beef':{'alts':['Minced Lamb (1:1)','Ground Turkey (leaner)','Lentils + walnuts'],'ratio':'Same weight'},
+  'Lamb':{'alts':['Beef (similar time)','Chicken thighs (reduce time)'],'ratio':'Same weight'},
+  'Salmon':{'alts':['Tuna steaks (1:1)','Cod or Sea Bass','Canned Tuna'],'ratio':'Same weight'},
+  'Shrimp':{'alts':['Scallops','Firm white fish cubed','Chicken breast (longer)'],'ratio':'Same weight'},
+  'Canned Tuna':{'alts':['Canned salmon','Shredded chicken','Canned sardines'],'ratio':'Same amount'},
+  'Pasta':{'alts':['Rice (cook separately)','Couscous (5 min)','Quinoa'],'ratio':'Same dry weight'},
+  'Rice':{'alts':['Cauliflower Rice (low-carb)','Couscous (quick)','Quinoa'],'ratio':'Same cooked volume'},
+  'Noodles':{'alts':['Spaghetti (1:1)','Rice noodles','Courgette spirals'],'ratio':'Same weight'},
+  'Bread':{'alts':['Pita bread','Tortilla wraps','Lettuce leaves'],'ratio':'1-2 per serving'},
+  'Flour':{'alts':['Cornstarch (use half)','Almond Flour (1:1)','Breadcrumbs (coating)'],'ratio':'Varies by use'},
+  'Oats':{'alts':['Quinoa flakes (1:1)','Crushed rice cakes'],'ratio':'1:1'},
+  'Pita':{'alts':['Flatbread','Tortilla wraps','Naan bread'],'ratio':'1 per person'},
+  'Couscous':{'alts':['Quinoa (1:1, longer)','Bulgur wheat','Cauliflower rice'],'ratio':'1:1 by volume'},
+  'Chickpeas':{'alts':['White beans (1:1)','Lentils (1:1)','Butter beans'],'ratio':'1:1'},
+  'Lentils':{'alts':['Split peas (1:1)','Chickpeas (longer cook)','Brown rice'],'ratio':'1:1'},
+  'Tortilla':{'alts':['Pita bread','Large lettuce leaves','Flatbread'],'ratio':'1 per serving'},
+  'Olive Oil':{'alts':['Vegetable Oil (1:1)','Sunflower Oil (1:1)','Avocado Oil (1:1)'],'ratio':'1:1'},
+  'Soy Sauce':{'alts':['Coconut Aminos (less salty, 1:1)','Tamari (gluten-free, 1:1)'],'ratio':'1:1'},
+  'Tomato Paste':{'alts':['Ketchup (use 3x more)','Tomato puree (use 2x)'],'ratio':'1 tbsp paste = 3 tbsp ketchup'},
+  'Coconut Milk':{'alts':['Evaporated Milk (1:1)','Cream + coconut extract','Oat Cream'],'ratio':'1:1'},
+  'Onion':{'alts':['Shallots (same amount)','Leek','Onion powder (1 tsp per onion)'],'ratio':'1 medium = 1 tsp powder'},
+  'Garlic':{'alts':['Garlic powder (1/4 tsp per clove)','Garlic paste (1:1)'],'ratio':'1 clove = 1/4 tsp powder'},
+  'Tomato':{'alts':['Canned tomatoes (same weight)','Sun-dried tomatoes (use less)'],'ratio':'1 fresh = 150g canned'},
+  'Potato':{'alts':['Sweet Potato (1:1)','Parsnip (sweeter)','Cauliflower (low-carb)'],'ratio':'1:1 by weight'},
+  'Carrot':{'alts':['Parsnip (sweeter)','Sweet Potato','Butternut Squash'],'ratio':'1:1'},
+  'Spinach':{'alts':['Kale (cook longer)','Swiss Chard','Frozen Spinach (1:1)'],'ratio':'1:1'},
+  'Broccoli':{'alts':['Cauliflower (1:1)','Green Beans','Asparagus'],'ratio':'1:1 by weight'},
+  'Mushroom':{'alts':['Aubergine (similar texture)','Courgette'],'ratio':'1:1 by weight'},
+  'Eggplant':{'alts':['Courgette','Portobello mushrooms'],'ratio':'1:1 by weight'},
+  'Lemon':{'alts':['Lime (1:1)','White wine vinegar (half)','Apple cider vinegar (half)'],'ratio':'1 lemon = 3 tbsp juice'},
+  'Avocado':{'alts':['Hummus (in wraps)','Cream cheese (on toast)','Tahini'],'ratio':'Adjust to taste'},
+  'Cumin':{'alts':['Caraway seeds (1:1)','Garam masala (use less)'],'ratio':'1:1'},
+  'Paprika':{'alts':['Cayenne (1/4 amount, much hotter)','Chili powder'],'ratio':'Adjust to heat level'},
+  'Turmeric':{'alts':['Saffron (tiny pinch)','Curry powder (contains turmeric)'],'ratio':'1:1 for colour'},
+  'Curry Powder':{'alts':['Garam masala + turmeric','Cumin + coriander + turmeric'],'ratio':'1:1'},
+  'Honey':{'alts':['Maple syrup (1:1)','Agave nectar (1:1)','Sugar (3/4 amount)'],'ratio':'1:1 liquid sweeteners'},
+  'Stock Cube':{'alts':['Miso paste (1 tsp per cube)','Soy sauce + herbs'],'ratio':'1 cube = 500ml broth'},
+};
+
 const MEALS = [
   {id:1,name:'Fried Eggs',time:'5 min',s:'1-2',cat:'Breakfast',keys:['Eggs'],
    ings:[{n:'Eggs',q:'2'},{n:'Butter',q:'1 tbsp'},{n:'Salt',q:'to taste'}],
@@ -2329,6 +2544,165 @@ function scoreMeal(meal,ings){
   return{hits:hits.length,pct};
 }
 
+
+// ════════════════════════════════════════════════════════
+// INTERACTIVE TUTORIAL
+// ════════════════════════════════════════════════════════
+const TUT_STEPS = [
+  {
+    targetId: 'cat-scroll',
+    title: 'Browse Ingredients',
+    body: 'Tap the category tabs to switch between Meat & Eggs, Vegetables, Dairy, Grains and more. Each chip shows its cook time.',
+    position: 'below',
+    tab: 'finder',
+  },
+  {
+    targetId: 'ing-grid',
+    title: 'Select Your Ingredients',
+    body: 'Tap any ingredient chip to select it — it turns orange. Select everything you have in your fridge. You can also type custom ingredients in the box below.',
+    position: 'below',
+    tab: 'finder',
+  },
+  {
+    targetId: 'pg-finder',
+    targetQuery: '.find-btn',
+    title: 'Find Your Meals',
+    body: 'Hit "Find Meals" to instantly match recipes from our database of 100+ halal meals, plus free AI-powered suggestions.',
+    position: 'above',
+    tab: 'finder',
+  },
+  {
+    targetId: 'week-strip',
+    title: 'Plan Your Week',
+    body: 'Tap any day to select it, then use "Add Meal" to assign meals to Breakfast, Lunch or Dinner. Dots appear on days that have meals planned.',
+    position: 'below',
+    tab: 'planner',
+  },
+  {
+    targetId: 'pg-settings',
+    targetQuery: '[data-action="open-api"]',
+    title: 'Unlock AI Features',
+    body: 'Add your own API key in Settings to get even smarter AI suggestions. The built-in free AI works without any key.',
+    position: 'below',
+    tab: 'settings',
+  },
+];
+
+let _tutStep = 0;
+let _tutActive = false;
+let _tutResizeObs = null;
+
+function startTutorial(fromStep=0) {
+  _tutStep = fromStep;
+  _tutActive = true;
+  const overlay = document.getElementById('tutorial-overlay');
+  if (overlay) overlay.classList.add('active');
+  showTutStep(_tutStep);
+  // Observe resize to reposition spotlight
+  if (window.ResizeObserver && !_tutResizeObs) {
+    _tutResizeObs = new ResizeObserver(() => { if (_tutActive) positionTutSpotlight(TUT_STEPS[_tutStep]); });
+    _tutResizeObs.observe(document.body);
+  }
+}
+
+function endTutorial(markDone=true) {
+  _tutActive = false;
+  const overlay = document.getElementById('tutorial-overlay');
+  if (overlay) overlay.classList.remove('active');
+  if (markDone) LS.set('mm5_tut_done', true);
+}
+
+function showTutStep(n) {
+  const steps = TUT_STEPS;
+  if (n >= steps.length) { endTutorial(true); return; }
+  const step = steps[n];
+
+  // Switch tab if needed
+  if (step.tab) {
+    const tabBtn = document.querySelector('[data-action="tab-' + step.tab + '"]');
+    if (tabBtn && !tabBtn.classList.contains('active')) go(step.tab, tabBtn);
+  }
+
+  // Small delay for tab switch animation
+  setTimeout(() => {
+    positionTutSpotlight(step);
+    updateTutTooltip(n, step);
+  }, 120);
+}
+
+function positionTutSpotlight(step) {
+  const spotlight = document.getElementById('tut-spotlight');
+  if (!spotlight) return;
+
+  let el = step.targetQuery
+    ? document.querySelector(step.targetQuery)
+    : document.getElementById(step.targetId);
+
+  if (!el) { spotlight.style.display = 'none'; return; }
+  spotlight.style.display = 'block';
+
+  const r = el.getBoundingClientRect();
+  const pad = 8;
+  spotlight.style.top    = (r.top - pad) + 'px';
+  spotlight.style.left   = (r.left - pad) + 'px';
+  spotlight.style.width  = (r.width + pad*2) + 'px';
+  spotlight.style.height = (r.height + pad*2) + 'px';
+}
+
+function updateTutTooltip(n, step) {
+  const tooltip  = document.getElementById('tut-tooltip');
+  const labelEl  = document.getElementById('tut-step-label');
+  const titleEl  = document.getElementById('tut-title');
+  const bodyEl   = document.getElementById('tut-body');
+  const dotsEl   = document.getElementById('tut-dots');
+  const nextBtn  = document.getElementById('tut-next-btn');
+  if (!tooltip) return;
+
+  // Content
+  labelEl.textContent  = 'Step ' + (n+1) + ' of ' + TUT_STEPS.length;
+  titleEl.textContent  = step.title;
+  bodyEl.textContent   = step.body;
+  nextBtn.textContent  = n === TUT_STEPS.length - 1 ? 'Finish' : 'Next';
+
+  // Dots
+  dotsEl.innerHTML = TUT_STEPS.map((_,i) =>
+    '<div class="tut-dot' + (i===n?' active':'') + '"></div>'
+  ).join('');
+
+  // Position tooltip relative to spotlight
+  let el = step.targetQuery
+    ? document.querySelector(step.targetQuery)
+    : document.getElementById(step.targetId);
+
+  if (!el) return;
+  const r = el.getBoundingClientRect();
+  const tw = 280, th = 160, pad = 8;
+  const vw = window.innerWidth, vh = window.innerHeight;
+
+  tooltip.classList.remove('arrow-top','arrow-bottom');
+
+  let top, left;
+  if (step.position === 'below' && r.bottom + th + 20 < vh) {
+    top = r.bottom + pad + 16;
+    tooltip.classList.add('arrow-top');
+  } else {
+    top = r.top - th - pad - 16;
+    tooltip.classList.add('arrow-bottom');
+  }
+
+  left = Math.max(16, Math.min(r.left, vw - tw - 16));
+  tooltip.style.top  = top + 'px';
+  tooltip.style.left = left + 'px';
+  tooltip.style.width = tw + 'px';
+}
+
+function initTutorialIfNew() {
+  if (!LS.get('mm5_tut_done', false) && !LS.get('mm5_ob', false)) return; // onboarding handles first visit
+  if (!LS.get('mm5_tut_done', false)) {
+    // First time after onboarding
+    setTimeout(() => startTutorial(0), 600);
+  }
+}
 // ════════════════════════════════════════════════════════
 // ONBOARDING
 // ════════════════════════════════════════════════════════
@@ -2385,6 +2759,10 @@ function finishOnboarding(){
   LS.set(KEY.ob,true);
   const overlay=document.getElementById('onboarding-overlay');
   if(overlay){overlay.style.opacity='0';setTimeout(()=>{overlay.style.display='none';},400);}
+  // Start tutorial after onboarding completes (delay for transition)
+  if(!LS.get('mm5_tut_done',false)){
+    setTimeout(()=>startTutorial(0),800);
+  }
 }
 
 // ════════════════════════════════════════════════════════
@@ -2510,13 +2888,46 @@ function openSaved(id){
 }
 function populateModal(m){
   document.getElementById('m-title').textContent=m.name;
-  document.getElementById('m-sub').textContent=[m.time&&'⏱ '+m.time,m.s&&'👥 '+m.s+' serving'+(m.s==='1'?'':'s'),m.cat||''].filter(Boolean).join('  ·  ');
+  document.getElementById('m-sub').textContent=[m.time&&'\u23f1 '+m.time,m.s&&'\ud83d\udc65 '+m.s+' serving'+(m.s==='1'?'':'s'),m.cat||''].filter(Boolean).join('  \u00b7  ');
   const ings=m.ings||m.ingredients||[];
+  const userIngs=[...S.selIngs];
+  const missingNames=ings.filter(ing=>{
+    const name=(typeof ing==='string'?ing:(ing.n||ing.name||'')).toLowerCase().trim();
+    if(!name||['salt','pepper','water','to taste','pinch'].some(s=>name.includes(s)))return false;
+    return !userIngs.some(u=>fmatch(u,name));
+  }).map(ing=>typeof ing==='string'?ing:(ing.n||ing.name||''));
   document.getElementById('m-ing-list').innerHTML=ings.length
-    ?ings.map((ing,i)=>{const name=typeof ing==='string'?ing:(ing.n||ing.name||'');const qty=typeof ing==='string'?'':(ing.q||ing.amount||'');
-      return '<div class="ing-list-item"><div class="check-circle" id="ck'+i+'" data-action="toggle-check" data-idx="'+i+'"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"><\/polyline><\/svg><\/div><span style="flex:1;">'+name+'<\/span>'+(qty?'<span class="ing-qty">'+qty+'<\/span>':'')+'<\/div>';
-    }).join('')
+    ?ings.map((ing,i)=>{
+        const name=typeof ing==='string'?ing:(ing.n||ing.name||'');
+        const qty=typeof ing==='string'?'':(ing.q||ing.amount||'');
+        const isMissing=!!name&&missingNames.some(mn=>fmatch(mn,name));
+        return '<div class="ing-list-item'+(isMissing?' missing':'')+'">'+
+          '<div class="check-circle" id="ck'+i+'" data-action="toggle-check" data-idx="'+i+'">'  +
+          '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"><\/polyline><\/svg><\/div>'+
+          '<span class="ing-name" style="flex:1;'+(isMissing?'color:var(--r);font-weight:600;':'')+'">'+name+
+          (isMissing?' <span style="font-size:9px;background:var(--r-dim);color:var(--r);border-radius:4px;padding:1px 5px;margin-left:4px;">missing<\/span>':'')+
+          '<\/span>'+(qty?'<span class="ing-qty">'+qty+'<\/span>':'')+
+        '<\/div>';
+      }).join('')
     :'<p style="color:var(--t3);font-size:14px;padding:8px 0;">No ingredients listed.<\/p>';
+  const subEl=document.getElementById('m-sub-panel');
+  if(subEl){
+    const sKeys=Object.keys(SUBS);
+    const hasSub=missingNames.filter(mn=>sKeys.some(k=>fmatch(k,mn)));
+    if(hasSub.length>0){
+      subEl.style.display='block';
+      subEl.innerHTML='<div class="sub-panel-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/><\/svg> Substitution Guide<\/div>'+
+        hasSub.slice(0,4).map(mn=>{
+          const key=sKeys.find(k=>fmatch(k,mn))||mn;
+          const sub=SUBS[key]||{alts:[],ratio:''};
+          return '<div class="sub-item"><div style="flex:1;">'+
+            '<div style="font-size:12px;margin-bottom:3px;"><span style="color:var(--t3);">No <\/span><span class="sub-ing-name">'+key+'?<\/span><\/div>'+
+            '<div class="sub-alts">Try: '+sub.alts.slice(0,2).join(', ')+'<\/div>'+
+            (sub.ratio?'<div class="sub-ratio">Tip: '+sub.ratio+'<\/div>':'')+
+          '<\/div><\/div>';
+        }).join('');
+    } else { subEl.style.display='none'; }
+  }
   renderStepPips((m.steps||[]).length);renderStepCard(0,m.steps||[]);
   document.getElementById('m-notes-body').innerHTML=m.notes
     ?'<div class="step-hint">'+IC.info+'<span>'+m.notes+'<\/span><\/div>'
@@ -2709,7 +3120,19 @@ function renderStats(){
   el.innerHTML=[{l:'Saved Recipes',v:S.savedRecs.length},{l:'Meals Planned',v:totalPlanned},{l:'Grocery Items',v:S.grocery.length},{l:'Meals in DB',v:MEALS.length}].map(s=>'<div class="stat-box"><div class="stat-num">'+s.v+'<\/div><div class="stat-lbl">'+s.l+'<\/div><\/div>').join('');
 }
 function clearData(){
-  if(!confirm('This will permanently delete ALL your data including saved recipes, meal plans, grocery list, API keys and settings. This cannot be undone.\n\nAre you sure?'))return;
+  // Use our custom confirm modal instead of browser confirm()
+  openConfirmModal();
+}
+function openConfirmModal(){
+  const el=document.getElementById('confirm-overlay');
+  if(el){el.classList.add('open');void el.offsetWidth;}
+}
+function closeConfirmModal(){
+  const el=document.getElementById('confirm-overlay');
+  if(el)el.classList.remove('open');
+}
+function doDeleteAllData(){
+  closeConfirmModal();
   // Wipe every key we own
   const allKeys=['mm5_recs','mm5_week','mm5_groc','mm5_key','mm5_ob',
                  'mm5_notif','mm5_ai_on','mm5_servings',
@@ -2769,7 +3192,7 @@ function toast(msg){
 // MASTER EVENT DELEGATION
 // ════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
-  renderCats();renderGrid();renderCal();renderRecs();updateApiStatus();initOnboarding();
+  renderCats();renderGrid();renderCal();renderRecs();updateApiStatus();initOnboarding();initTutorialIfNew();
 
   const ci=document.getElementById('custom-inp');if(ci)ci.addEventListener('keydown',e=>{if(e.key==='Enter')addCustom();});
   const rs=document.getElementById('rec-search');if(rs)rs.addEventListener('input',e=>filterRec(e.target.value));
@@ -2844,6 +3267,15 @@ document.addEventListener('DOMContentLoaded',()=>{
       case 'clear-data':clearData();break;
       case 'close-api':closeOverlay('api-overlay');break;
       case 'export-data':exportData();break;
+      case 'restart-tutorial':LS.del('mm5_tut_done');startTutorial(0);break;
+      case 'confirm-cancel':closeConfirmModal();break;
+      case 'confirm-delete':doDeleteAllData();break;
+      case 'tut-skip':endTutorial(true);break;
+      case 'tut-next':
+        _tutStep++;
+        if(_tutStep<TUT_STEPS.length)showTutStep(_tutStep);
+        else endTutorial(true);
+        break;
       case 'show-privacy':openOverlay('privacy-overlay');break;
       case 'show-terms':openOverlay('privacy-overlay');break;
       case 'close-privacy':closeOverlay('privacy-overlay');break;
